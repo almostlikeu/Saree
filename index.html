@@ -7,34 +7,42 @@
 <body>
   <h1>Saree Income & Expense Tracker</h1>
 
-  <div id="formDiv">
+  <form id="entryForm" action="YOUR_APPS_SCRIPT_URL" method="POST" enctype="multipart/form-data" target="_blank">
     <label>Type:</label>
-    <select id="typeSelect">
+    <select name="Type" id="typeSelect" onchange="toggleFields()">
       <option value="Income">Income</option>
       <option value="Expense">Expense</option>
     </select>
 
     <div id="incomeFields">
-      <input type="text" id="sareeName" placeholder="Saree Name">
-      <input type="text" id="soldTo" placeholder="Sold To">
-      <input type="number" id="purchasePrice" placeholder="Purchase Price">
-      <input type="number" id="salePrice" placeholder="Sale Price">
-      <input type="file" id="photoFile" accept="image/*">
+      <input type="text" name="SareeName" placeholder="Saree Name">
+      <input type="text" name="SoldTo" placeholder="Sold To">
+      <input type="number" name="PurchasePrice" placeholder="Purchase Price">
+      <input type="number" name="SalePrice" placeholder="Sale Price">
+      <input type="file" name="PhotoFile" accept="image/*">
     </div>
 
-    <div id="expenseFields">
-      <input type="text" id="expenseDescription" placeholder="Nature of Expense">
-      <input type="number" id="expenseAmount" placeholder="Amount">
+    <div id="expenseFields" style="display:none">
+      <input type="text" name="ExpenseDescription" placeholder="Nature of Expense">
+      <input type="number" name="ExpenseAmount" placeholder="Amount">
     </div>
 
-    <input type="date" id="date" value="">
-    <input type="text" id="notes" placeholder="Notes (optional)">
-    <button onclick="submitEntry()">Submit</button>
-  </div>
+    <input type="date" name="Date">
+    <input type="text" name="Notes" placeholder="Notes (optional)">
+    <button type="submit">Submit</button>
+  </form>
 
   <h2>All Entries</h2>
   <div id="entriesDiv"></div>
 
   <script src="script.js"></script>
 </body>
+
+<script>
+function toggleFields() {
+  const type = document.getElementById("typeSelect").value;
+  document.getElementById("incomeFields").style.display = (type === "Income") ? "block" : "none";
+  document.getElementById("expenseFields").style.display = (type === "Expense") ? "block" : "none";
+}
+</script>
 </html>
