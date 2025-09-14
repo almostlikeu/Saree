@@ -36,13 +36,13 @@
   <div id="entriesDiv"></div>
 
   <script src="script.js"></script>
-</body>
 
-<script>
-function toggleFields() {
-  const type = document.getElementById("typeSelect").value;
-  document.getElementById("incomeFields").style.display = (type === "Income") ? "block" : "none";
-  document.getElementById("expenseFields").style.display = (type === "Expense") ? "block" : "none";
-}
-</script>
+  <script>
+    function toggleFields() {
+      const type = document.getElementById("typeSelect").value;
+      document.getElementById("incomeFields").style.display = (type === "Income") ? "block" : "none";
+      document.getElementById("expenseFields").style.display = (type === "Expense") ? "block" : "none";
+    }
+  </script>
+</body>
 </html>
