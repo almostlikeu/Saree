@@ -1,4 +1,4 @@
-const webAppURL = "https://script.google.com/macros/s/AKfycbyQS8t1GVdw3C5tWY6wZVuhSJ8IjvS2JDSo4KTyEsLNJkgfJaCcuf-vhJw6YkwZnZaY_Q/exec"; // Replace with your Web App URL
+const webAppURL = "https://script.google.com/macros/s/AKfycbwmfGREJvR51guhhcLHxv3PWZ4nFmK6roqoAjxisxQmImqyLvkTCblTF80GyMcCoZOs/exec"; // Replace with Apps Script URL
 
 document.getElementById("entryForm").addEventListener("submit", function(e){
   e.preventDefault();
@@ -40,8 +40,8 @@ document.getElementById("entryForm").addEventListener("submit", function(e){
 function postData(data){
   fetch(webAppURL, {
     method: "POST",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" }
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data)
   })
   .then(res => res.text())
   .then(() => {
