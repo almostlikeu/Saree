@@ -1,7 +1,9 @@
-const webAppURL = "https://script.google.com/macros/s/AKfycby2EpEnKWR8GmWGJhp1K_y6NhITtLMUHUo3z76CSGf8BYxOjHWpLhZKagwPiSFMSCSedQ/exec";
+const webAppURL = "https://script.google.com/macros/s/AKfycbxyLqjJKC6vVMN7qKgPN1uQtJX128W1y3ASYJEBusVD7MjqrPQxpQg5d2hnc6N8i1-DoA/exec"; // Replace with your deployed Apps Script URL
 
+// Handle form submission
 document.getElementById("entryForm").addEventListener("submit", function(e){
-  e.preventDefault(); // prevent normal form submission
+  e.preventDefault(); // prevent default form submission
+
   const form = e.target;
   const formData = new FormData(form);
 
@@ -18,6 +20,7 @@ document.getElementById("entryForm").addEventListener("submit", function(e){
   .catch(err => alert("Error: " + err.message));
 });
 
+// Load entries from Google Sheet
 function loadEntries() {
   fetch(webAppURL + "?action=read")
     .then(res => res.json())
@@ -27,7 +30,6 @@ function loadEntries() {
       data.reverse().forEach(row => {
         const eDiv = document.createElement("div");
         eDiv.className = "entry";
-
         eDiv.textContent = `${row.Timestamp} | ${row.Type} | ${row.Date} | ${row.SareeName || ""} | ${row.SoldTo || ""} | ${row.PurchasePrice || ""} | ${row.SalePrice || ""} | ${row.Profit || row.ExpenseAmount || ""} | ${row.ExpenseDescription || ""} | ${row.Notes || ""}`;
         div.appendChild(eDiv);
       });
