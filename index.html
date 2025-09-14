@@ -7,7 +7,7 @@
 <body>
   <h1>Saree Income & Expense Tracker</h1>
 
-  <form id="entryForm" action="YOUR_APPS_SCRIPT_URL" method="POST" enctype="multipart/form-data" target="_blank">
+  <form id="entryForm" action="YOUR_APPS_SCRIPT_URL" method="POST" enctype="multipart/form-data" onsubmit="submitForm(event)">
     <label>Type:</label>
     <select name="Type" id="typeSelect" onchange="toggleFields()">
       <option value="Income">Income</option>
