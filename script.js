@@ -1,25 +1,55 @@
-const webAppURL = "https://script.google.com/macros/s/AKfycbzWNclIiWHnRmgr1Q-ucerNr-o5o5t1fmx-QHDNu03iN8XEQbVJFFJh-1tYp1ISqPPttg/exec"; // replace with your deployed Apps Script URL
+const webAppURL = "https://script.google.com/macros/s/AKfycbyh106MB1sDMRsj_JA7au2NmINEDQ-njTSBY29YcnQA00JEfT4yst2VYyVClcbgpc_4UA/exec"; // Replace with your Apps Script Web App URL
 
 document.getElementById("entryForm").addEventListener("submit", function(e){
-  e.preventDefault(); // prevent default submission
+  e.preventDefault();
 
-  const form = e.target;
-  const formData = new FormData(form);
+  const type = document.getElementById("typeSelect").value;
+  const date = document.getElementById("date").value || new Date().toISOString().slice(0,10);
+  const notes = document.getElementById("notes").value;
 
+  const data = { Type: type, Date: date, Notes: notes };
+
+  if(type === "Income") {
+    data.SareeName = document.getElementById("sareeName").value;
+    data.SoldTo = document.getElementById("soldTo").value;
+    data.PurchasePrice = Number(document.getElementById("purchasePrice").value);
+    data.SalePrice = Number(document.getElementById("salePrice").value);
+
+    const fileInput = document.getElementById("photoFile");
+    if(fileInput.files.length > 0){
+      const reader = new FileReader();
+      reader.onload = function(){
+        data.PhotoBase64 = reader.result.split(",")[1]; // remove prefix
+        data.PhotoName = fileInput.files[0].name;
+        postData(data);
+      }
+      reader.readAsDataURL(fileInput.files[0]);
+      return;
+    }
+  } else {
+    data.ExpenseDescription = document.getElementById("expenseDescription").value;
+    data.ExpenseAmount = Number(document.getElementById("expenseAmount").value);
+  }
+
+  postData(data);
+});
+
+function postData(data){
   fetch(webAppURL, {
     method: "POST",
-    body: formData
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" }
   })
   .then(res => res.text())
   .then(() => {
     alert("Entry added!");
-    form.reset();
+    document.getElementById("entryForm").reset();
     loadEntries();
   })
   .catch(err => alert("Error: " + err.message));
-});
+}
 
-function loadEntries() {
+function loadEntries(){
   fetch(webAppURL + "?action=read")
     .then(res => res.json())
     .then(data => {
@@ -28,9 +58,7 @@ function loadEntries() {
       data.reverse().forEach(row => {
         const eDiv = document.createElement("div");
         eDiv.className = "entry";
-
         let imageHTML = row.PhotoURL ? `<a href="${row.PhotoURL}" target="_blank">Image</a>` : "";
-
         eDiv.innerHTML = `
           ${row.Timestamp} | ${row.Type} | ${row.Date} | ${row.SareeName || ""} | ${row.SoldTo || ""} | ${row.PurchasePrice || ""} | ${row.SalePrice || ""} | ${row.Profit || row.ExpenseAmount || ""} | ${row.ExpenseDescription || ""} | ${imageHTML} | ${row.Notes || ""}
         `;
@@ -39,5 +67,4 @@ function loadEntries() {
     });
 }
 
-// Load entries on page load
 document.addEventListener("DOMContentLoaded", loadEntries);
