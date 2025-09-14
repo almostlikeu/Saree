@@ -7,7 +7,7 @@
 <body>
   <h1>Saree Income & Expense Tracker</h1>
 
-  <form id="entryForm" enctype="multipart/form-data">
+  <form id="entryForm">
     <label>Type:</label>
     <select name="Type" id="typeSelect" onchange="toggleFields()">
       <option value="Income">Income</option>
@@ -15,20 +15,20 @@
     </select>
 
     <div id="incomeFields">
-      <input type="text" name="SareeName" placeholder="Saree Name">
-      <input type="text" name="SoldTo" placeholder="Sold To">
-      <input type="number" name="PurchasePrice" placeholder="Purchase Price">
-      <input type="number" name="SalePrice" placeholder="Sale Price">
-      <input type="file" name="PhotoFile" accept="image/*">
+      <input type="text" name="SareeName" id="sareeName" placeholder="Saree Name">
+      <input type="text" name="SoldTo" id="soldTo" placeholder="Sold To">
+      <input type="number" name="PurchasePrice" id="purchasePrice" placeholder="Purchase Price">
+      <input type="number" name="SalePrice" id="salePrice" placeholder="Sale Price">
+      <input type="file" id="photoFile" accept="image/*">
     </div>
 
     <div id="expenseFields" style="display:none">
-      <input type="text" name="ExpenseDescription" placeholder="Nature of Expense">
-      <input type="number" name="ExpenseAmount" placeholder="Amount">
+      <input type="text" name="ExpenseDescription" id="expenseDescription" placeholder="Nature of Expense">
+      <input type="number" name="ExpenseAmount" id="expenseAmount" placeholder="Amount">
     </div>
 
-    <input type="date" name="Date">
-    <input type="text" name="Notes" placeholder="Notes (optional)">
+    <input type="date" id="date" name="Date">
+    <input type="text" id="notes" name="Notes" placeholder="Notes (optional)">
     <button type="submit">Submit</button>
   </form>
 
