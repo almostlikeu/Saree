@@ -1,4 +1,4 @@
-const webAppURL = "https://script.google.com/macros/s/AKfycbyh106MB1sDMRsj_JA7au2NmINEDQ-njTSBY29YcnQA00JEfT4yst2VYyVClcbgpc_4UA/exec"; // Replace with your Apps Script Web App URL
+const webAppURL = "https://script.google.com/macros/s/AKfycbyQS8t1GVdw3C5tWY6wZVuhSJ8IjvS2JDSo4KTyEsLNJkgfJaCcuf-vhJw6YkwZnZaY_Q/exec"; // Replace with your Web App URL
 
 document.getElementById("entryForm").addEventListener("submit", function(e){
   e.preventDefault();
@@ -19,8 +19,11 @@ document.getElementById("entryForm").addEventListener("submit", function(e){
     if(fileInput.files.length > 0){
       const reader = new FileReader();
       reader.onload = function(){
-        data.PhotoBase64 = reader.result.split(",")[1]; // remove prefix
-        data.PhotoName = fileInput.files[0].name;
+        const base64Data = reader.result.split(",")[1]; // remove prefix
+        if(base64Data) {
+          data.PhotoBase64 = base64Data;
+          data.PhotoName = fileInput.files[0].name;
+        }
         postData(data);
       }
       reader.readAsDataURL(fileInput.files[0]);
