@@ -1,19 +1,22 @@
-const webAppURL = "https://script.google.com/macros/s/AKfycbxSlu2hGFby3IXjnjaLQBB8k89eJzzt5ETQpDdgqAk_Nc3c13eDU05VjEjSXZcX--8Jpw/exec";
+const webAppURL = "https://script.google.com/macros/s/AKfycby2EpEnKWR8GmWGJhp1K_y6NhITtLMUHUo3z76CSGf8BYxOjHWpLhZKagwPiSFMSCSedQ/exec";
 
-function submitForm(e) {
-  e.preventDefault(); // prevent default page reload
-  const form = document.getElementById("entryForm");
+document.getElementById("entryForm").addEventListener("submit", function(e){
+  e.preventDefault(); // prevent normal form submission
+  const form = e.target;
   const formData = new FormData(form);
 
-  fetch(form.action, { method: "POST", body: formData })
-    .then(res => res.text())
-    .then(() => {
-      alert("Entry added!");
-      form.reset();
-      loadEntries();
-    })
-    .catch(err => alert("Error: " + err.message));
-}
+  fetch(webAppURL, {
+    method: "POST",
+    body: formData
+  })
+  .then(res => res.text())
+  .then(() => {
+    alert("Entry added!");
+    form.reset();
+    loadEntries();
+  })
+  .catch(err => alert("Error: " + err.message));
+});
 
 function loadEntries() {
   fetch(webAppURL + "?action=read")
