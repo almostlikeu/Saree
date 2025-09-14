@@ -22,12 +22,26 @@ function submitEntry(){
     data.SoldTo = document.getElementById("soldTo").value;
     data.PurchasePrice = Number(document.getElementById("purchasePrice").value);
     data.SalePrice = Number(document.getElementById("salePrice").value);
-    data.PhotoURL = document.getElementById("photoURL").value;
+
+    const fileInput = document.getElementById("photoFile");
+    if(fileInput.files.length>0){
+      const reader = new FileReader();
+      reader.onload = function(){
+        data.PhotoBase64 = reader.result;
+        postData(data);
+      }
+      reader.readAsDataURL(fileInput.files[0]);
+      return;
+    }
   } else {
     data.ExpenseDescription = document.getElementById("expenseDescription").value;
     data.ExpenseAmount = Number(document.getElementById("expenseAmount").value);
   }
 
+  postData(data);
+}
+
+function postData(data){
   fetch(webAppURL, {
     method:"POST",
     body: JSON.stringify(data)
@@ -56,3 +70,4 @@ document.addEventListener("DOMContentLoaded", function(){
   document.getElementById("typeSelect").dispatchEvent(new Event("change"));
   loadEntries();
 });
+  
