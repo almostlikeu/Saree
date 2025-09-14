@@ -1,4 +1,4 @@
-const webAppURL = "https://script.google.com/macros/s/AKfycbwwEG3VUloGxZMBD9pxiFNfAUfzfc6Qex9haECLARmrV4Ym492XhO_2o_JvPdLTW_cvjg/exec"; // Replace with your deployed Apps Script URL
+const webAppURL = "https://script.google.com/macros/s/AKfycbx8EWSyjLcJuRh30TQvlsnNwCgotTcYDyAB_QjuEyf-Ap-13-wnHDm9q9H0LYYPgHbs7A/exec"; // Replace with your Apps Script Web App URL
 
 document.getElementById("typeSelect").addEventListener("change", function() {
   if(this.value === "Income") {
@@ -51,7 +51,7 @@ function postData(data) {
   .then(res => {
     if(res.status === "success") {
       alert("Entry added!");
-      // ✅ Small delay to allow Drive link to become active
+      // ✅ Small delay to ensure Drive image is accessible
       setTimeout(loadEntries, 500);
     } else {
       alert("Error: " + res.message);
