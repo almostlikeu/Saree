@@ -1,4 +1,4 @@
-const webAppURL = "YOUR_WEB_APP_URL_HERE"; // Replace with your deployed Apps Script URL
+const webAppURL = "https://script.google.com/macros/s/AKfycbwwEG3VUloGxZMBD9pxiFNfAUfzfc6Qex9haECLARmrV4Ym492XhO_2o_JvPdLTW_cvjg/exec"; // Replace with your deployed Apps Script URL
 
 document.getElementById("typeSelect").addEventListener("change", function() {
   if(this.value === "Income") {
