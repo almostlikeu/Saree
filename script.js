@@ -1,4 +1,4 @@
-const webAppURL = "YOUR_WEB_APP_URL_HERE";
+const webAppURL = "https://script.google.com/macros/s/AKfycbz6YGE1jFI4wnnOhSdLegs3dRfP9lN1i0KCz-K9-Mt_I57_QFC18RqkLYz1Yl5mGhPjGw/exec";
 
 document.getElementById("typeSelect").addEventListener("change", function(){
   if(this.value==="Income"){
