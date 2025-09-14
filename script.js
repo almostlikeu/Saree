@@ -1,4 +1,4 @@
-const webAppURL = "https://script.google.com/macros/s/AKfycbx8EWSyjLcJuRh30TQvlsnNwCgotTcYDyAB_QjuEyf-Ap-13-wnHDm9q9H0LYYPgHbs7A/exec"; // Replace with your Apps Script Web App URL
+const webAppURL = "https://script.google.com/macros/s/AKfycbwF3hN3TMIHPzftu-tEGzYDKJnKCJ_V3lkKiBCBXbeNCNqcjwQ_u3xtSi3SpY4h8FEciw/exec"; // Replace with your Apps Script Web App URL
 
 document.getElementById("typeSelect").addEventListener("change", function() {
   if(this.value === "Income") {
@@ -51,7 +51,7 @@ function postData(data) {
   .then(res => {
     if(res.status === "success") {
       alert("Entry added!");
-      // ✅ Small delay to ensure Drive image is accessible
+      // Small delay to allow Drive image to be accessible
       setTimeout(loadEntries, 500);
     } else {
       alert("Error: " + res.message);
@@ -73,7 +73,7 @@ function loadEntries() {
       const eDiv = document.createElement("div");
       eDiv.className = "entry";
       eDiv.innerHTML = `<strong>${row.Type}</strong> | ${row.Date} | ${row.Profit || row.ExpenseAmount} | ${row.ExpenseDescription || row.SareeName || ""} | ${row.SoldTo || ""}`;
-      if(row.PhotoURL) eDiv.innerHTML += `<br><img src="${row.PhotoURL}">`;
+      if(row.PhotoURL) eDiv.innerHTML += `<br><img src="${row.PhotoURL}" style="max-width:100px; max-height:100px;">`;
       if(row.Notes) eDiv.innerHTML += `<br>Notes: ${row.Notes}`;
       div.appendChild(eDiv);
     });
