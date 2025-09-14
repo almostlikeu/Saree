@@ -2,14 +2,7 @@
 <html>
 <head>
   <title>Saree Tracker</title>
-  <style>
-    body { font-family: Arial; margin: 20px; }
-    input, select { display:block; margin:5px 0; padding:5px; width:200px; }
-    button { padding:5px 10px; margin-top:10px; }
-    #entriesDiv { margin-top:20px; }
-    .entry { border-bottom:1px solid #ccc; padding:5px 0; }
-    img { max-width:100px; max-height:100px; display:block; margin-top:5px; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Saree Income & Expense Tracker</h1>
@@ -29,12 +22,12 @@
       <input type="file" id="photoFile" accept="image/*">
     </div>
 
-    <div id="expenseFields" style="display:none;">
+    <div id="expenseFields">
       <input type="text" id="expenseDescription" placeholder="Nature of Expense">
       <input type="number" id="expenseAmount" placeholder="Amount">
     </div>
 
-    <input type="date" id="date">
+    <input type="date" id="date" value="">
     <input type="text" id="notes" placeholder="Notes (optional)">
     <button onclick="submitEntry()">Submit</button>
   </div>
@@ -42,67 +35,6 @@
   <h2>All Entries</h2>
   <div id="entriesDiv"></div>
 
-  <script>
-    document.getElementById("typeSelect").addEventListener("change", function() {
-      if(this.value === "Income") {
-        document.getElementById("incomeFields").style.display = "block";
-        document.getElementById("expenseFields").style.display = "none";
-      } else {
-        document.getElementById("incomeFields").style.display = "none";
-        document.getElementById("expenseFields").style.display = "block";
-      }
-    });
-
-    function submitEntry() {
-      const type = document.getElementById("typeSelect").value;
-      const date = document.getElementById("date").value || new Date().toISOString().slice(0,10);
-      const notes = document.getElementById("notes").value;
-
-      const data = { Type:type, Date:date, Notes:notes };
-
-      if(type === "Income") {
-        data.SareeName = document.getElementById("sareeName").value;
-        data.SoldTo = document.getElementById("soldTo").value;
-        data.PurchasePrice = Number(document.getElementById("purchasePrice").value);
-        data.SalePrice = Number(document.getElementById("salePrice").value);
-
-        const fileInput = document.getElementById("photoFile");
-        if(fileInput.files.length > 0){
-          const reader = new FileReader();
-          reader.onload = function(){
-            data.PhotoBase64 = reader.result;
-            google.script.run.withSuccessHandler(loadEntries).submitEntry(data);
-          }
-          reader.readAsDataURL(fileInput.files[0]);
-          return;
-        }
-      } else {
-        data.ExpenseDescription = document.getElementById("expenseDescription").value;
-        data.ExpenseAmount = Number(document.getElementById("expenseAmount").value);
-      }
-
-      google.script.run.withSuccessHandler(loadEntries).submitEntry(data);
-    }
-
-    function loadEntries() {
-      google.script.run.withSuccessHandler(function(data){
-        const div = document.getElementById("entriesDiv");
-        div.innerHTML = "";
-        data.reverse().forEach(row => {
-          const eDiv = document.createElement("div");
-          eDiv.className = "entry";
-          eDiv.innerHTML = `<strong>${row.Type}</strong> | ${row.Date} | ${row.Profit || row.ExpenseAmount} | ${row.ExpenseDescription || row.SareeName || ""} | ${row.SoldTo || ""}`;
-          if(row.PhotoURL) eDiv.innerHTML += `<br><img src="${row.PhotoURL}">`;
-          if(row.Notes) eDiv.innerHTML += `<br>Notes: ${row.Notes}`;
-          div.appendChild(eDiv);
-        });
-      }).getEntries();
-    }
-
-    document.addEventListener("DOMContentLoaded", function(){
-      document.getElementById("typeSelect").dispatchEvent(new Event("change"));
-      loadEntries();
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
