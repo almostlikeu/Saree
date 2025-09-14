@@ -1,4 +1,4 @@
-const webAppURL = "https://script.google.com/macros/s/AKfycbwmfGREJvR51guhhcLHxv3PWZ4nFmK6roqoAjxisxQmImqyLvkTCblTF80GyMcCoZOs/exec"; // Replace with Apps Script URL
+const webAppURL = "https://script.google.com/macros/s/AKfycbwb1KBexljEhOgk8kperSO6Bbd-KL2zA7R4zAvc4Mqcov2d8diPfXaFF568qkGf4M2s_A/exec"; // Replace with your deployed Apps Script URL
 
 document.getElementById("entryForm").addEventListener("submit", function(e){
   e.preventDefault();
@@ -19,7 +19,7 @@ document.getElementById("entryForm").addEventListener("submit", function(e){
     if(fileInput.files.length > 0){
       const reader = new FileReader();
       reader.onload = function(){
-        const base64Data = reader.result.split(",")[1]; // remove prefix
+        const base64Data = reader.result.split(",")[1];
         if(base64Data) {
           data.PhotoBase64 = base64Data;
           data.PhotoName = fileInput.files[0].name;
@@ -43,8 +43,8 @@ function postData(data){
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   })
-  .then(res => res.text())
-  .then(() => {
+  .then(res => res.json())
+  .then(res => {
     alert("Entry added!");
     document.getElementById("entryForm").reset();
     loadEntries();
