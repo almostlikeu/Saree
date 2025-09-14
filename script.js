@@ -1,4 +1,4 @@
-const webAppURL = "https://script.google.com/macros/s/AKfycbyE8wFJ8ZPfrLrqHRAbJI3f-yYRRwuMRC7fxC4piCTtwpMuO7zOwWWRuKq0Iq1zlpzOjA/exec"; // Replace with your deployed Apps Script URL
+const webAppURL = "YOUR_WEB_APP_URL_HERE"; // Replace with your deployed Apps Script URL
 
 document.getElementById("typeSelect").addEventListener("change", function() {
   if(this.value === "Income") {
@@ -44,19 +44,15 @@ function submitEntry() {
 function postData(data) {
   fetch(webAppURL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: {"Content-Type": "application/json"},
     body: JSON.stringify(data)
   })
-  .then(res => {
-    if(!res.ok) throw new Error("Network response was not ok");
-    return res.json();
-  })
+  .then(res => res.json())
   .then(res => {
     if(res.status === "success") {
       alert("Entry added!");
-      loadEntries();
+      // ✅ Small delay to allow Drive link to become active
+      setTimeout(loadEntries, 500);
     } else {
       alert("Error: " + res.message);
     }
